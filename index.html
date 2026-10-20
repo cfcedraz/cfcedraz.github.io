@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Portfólio de Caio Felipe Gonçalves Cedraz — graduando em Engenharia de Software. Dados, indicadores, automação e desenvolvimento web.">
+<meta name="theme-color" content="#070a12">
+<title>Caio Cedraz · Engenharia de Software — Portfólio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23070a12'/%3E%3Ctext x='50' y='68' font-size='52' font-family='Arial' font-weight='bold' fill='%230ea5e9' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --aura:#0ea5e9; --aura-light:#38bdf8; --verde:#10b981;
+  --dark:#0b0f19; --darker:#070a12; --card:rgba(15,23,42,0.55);
+  --text:#f8fafc; --muted:#94a3b8; --border:#1e293b;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--darker);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* fundo */
+.bg-mesh{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(ellipse 80% 50% at 20% 35%, rgba(14,165,233,0.08) 0%, transparent 60%),
+  radial-gradient(ellipse 60% 40% at 80% 15%, rgba(16,185,129,0.05) 0%, transparent 50%),
+  radial-gradient(ellipse 50% 60% at 50% 100%, rgba(14,165,233,0.05) 0%, transparent 50%)}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:
+  linear-gradient(rgba(14,165,233,0.03) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(14,165,233,0.03) 1px, transparent 1px);
+  background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 75%)}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;opacity:0.45;animation:float 22s ease-in-out infinite}
+.orb-1{width:420px;height:420px;background:radial-gradient(circle, rgba(14,165,233,0.35), transparent 70%);top:-120px;right:-120px}
+.orb-2{width:300px;height:300px;background:radial-gradient(circle, rgba(16,185,129,0.22), transparent 70%);bottom:8%;left:-90px;animation-delay:-8s}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(30px,-40px) scale(1.05)}50%{transform:translate(-20px,20px) scale(0.96)}75%{transform:translate(40px,30px) scale(1.02)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+
+.wrap{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding:0 1.4rem 5rem}
+
+/* nav */
+nav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:1.2rem;padding:1rem 0;backdrop-filter:blur(14px);background:rgba(7,10,18,0.7);border-bottom:1px solid rgba(30,41,59,0.6)}
+nav .marca{font-weight:900;font-size:1.02rem;letter-spacing:-0.02em}
+nav .marca span{color:var(--aura-light)}
+nav .links{margin-left:auto;display:flex;gap:1.1rem;flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:0.8rem;font-weight:600;transition:color .2s}
+nav a:hover{color:var(--aura-light)}
+
+/* hero */
+.hero{padding:4.5rem 0 3rem;animation:fadeUp .8s ease}
+.hero .badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(14,165,233,0.08);border:1px solid rgba(14,165,233,0.25);color:var(--aura-light);padding:0.45rem 1.1rem;border-radius:999px;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.5rem}
+.hero .badge i{font-size:0.5rem;color:var(--verde);animation:pulse 2s infinite}
+.hero h1{font-size:clamp(2.1rem,6vw,3.4rem);font-weight:900;letter-spacing:-0.03em;line-height:1.1}
+.hero h1 span{background:linear-gradient(90deg,var(--aura-light),#0bf5ca);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .papel{font-size:clamp(1rem,2.6vw,1.25rem);color:var(--muted);font-weight:500;margin-top:0.9rem;max-width:720px;line-height:1.6}
+.hero .contatos{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:1.8rem}
+.chip{display:inline-flex;align-items:center;gap:0.5rem;background:var(--card);border:1px solid var(--border);border-radius:999px;color:var(--text);font-size:0.78rem;font-weight:600;padding:0.55rem 1.05rem;text-decoration:none;backdrop-filter:blur(10px);transition:border-color .2s, transform .15s}
+.chip:hover{border-color:var(--aura);transform:translateY(-2px)}
+.chip i{color:var(--aura-light)}
+
+/* secoes */
+section{padding-top:3.6rem}
+.sec-tit{display:flex;align-items:center;gap:0.8rem;margin-bottom:1.4rem}
+.sec-tit .ic{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,var(--aura),#0284c7);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 22px rgba(14,165,233,0.3)}
+.sec-tit h2{font-size:1.45rem;font-weight:800;letter-spacing:-0.02em}
+.sec-tit small{display:block;color:var(--muted);font-size:0.74rem;font-weight:500;margin-top:1px}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem 1.6rem;backdrop-filter:blur(14px);transition:border-color .2s, transform .15s}
+.card:hover{border-color:rgba(14,165,233,0.4)}
+.txt{color:var(--muted);font-size:0.92rem;line-height:1.75}
+.txt b{color:var(--text);font-weight:700}
+
+/* formacao */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-card{position:relative;overflow:hidden}
+.form-card .curso{font-size:1.05rem;font-weight:800;margin-bottom:0.2rem}
+.form-card .inst{color:var(--aura-light);font-size:0.82rem;font-weight:700}
+.form-card .per{color:var(--muted);font-size:0.76rem;margin-top:0.3rem}
+.form-card .st{display:inline-flex;align-items:center;gap:0.4rem;margin-top:0.8rem;font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;border-radius:999px;padding:0.3rem 0.8rem}
+.st.andamento{background:rgba(14,165,233,0.1);border:1px solid rgba(14,165,233,0.3);color:var(--aura-light)}
+.st.completo{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);color:#6ee7b7}
+.prog{height:7px;background:rgba(30,41,59,0.8);border-radius:99px;margin-top:1rem;overflow:hidden}
+.prog>div{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--aura),#0bf5ca)}
+.prog-leg{font-size:0.68rem;color:var(--muted);margin-top:0.4rem}
+.cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.55rem;margin-top:1rem}
+.cert{display:flex;align-items:center;gap:0.6rem;background:rgba(7,10,18,0.45);border:1px solid var(--border);border-radius:11px;padding:0.65rem 0.9rem;font-size:0.78rem;color:var(--text)}
+.cert i{color:var(--verde);font-size:0.7rem}
+.cert small{color:var(--muted)}
+
+/* experiencia - timeline */
+.tl{position:relative;margin-left:0.5rem;padding-left:1.6rem;border-left:2px solid rgba(14,165,233,0.25)}
+.tl-item{position:relative;padding-bottom:1.6rem}
+.tl-item::before{content:"";position:absolute;left:-2.1rem;top:0.35rem;width:13px;height:13px;border-radius:50%;background:var(--darker);border:3px solid var(--aura)}
+.tl-item.atual::before{box-shadow:0 0 14px rgba(14,165,233,0.8)}
+.tl-item h3{font-size:1rem;font-weight:800}
+.tl-item .emp{color:var(--aura-light);font-size:0.82rem;font-weight:700}
+.tl-item .per{color:var(--muted);font-size:0.74rem;margin:0.15rem 0 0.6rem}
+.tl-item ul{margin:0.4rem 0 0 1.05rem;color:var(--muted);font-size:0.86rem;line-height:1.7}
+.tl-item ul b{color:var(--text)}
+.tag-atual{display:inline-block;margin-left:0.5rem;font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.35);color:#6ee7b7;border-radius:999px;padding:0.15rem 0.6rem;vertical-align:middle}
+
+/* projetos */
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.proj .top{display:flex;align-items:center;gap:0.7rem;margin-bottom:0.7rem}
+.proj .pic{width:38px;height:38px;border-radius:10px;background:rgba(14,165,233,0.12);border:1px solid rgba(14,165,233,0.3);display:flex;align-items:center;justify-content:center;color:var(--aura-light)}
+.proj h3{font-size:0.98rem;font-weight:800}
+.proj p{color:var(--muted);font-size:0.84rem;line-height:1.65}
+.tags{display:flex;gap:0.4rem;flex-wrap:wrap;margin-top:0.9rem}
+.tag{font-size:0.64rem;font-weight:700;color:var(--muted);background:rgba(7,10,18,0.5);border:1px solid var(--border);border-radius:999px;padding:0.25rem 0.65rem}
+
+/* skills */
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
+.skill h3{font-size:0.82rem;font-weight:800;color:var(--aura-light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.7rem;display:flex;align-items:center;gap:0.5rem}
+.skill .itens{display:flex;gap:0.4rem;flex-wrap:wrap}
+
+/* contato */
+.ctt{display:flex;gap:0.7rem;flex-wrap:wrap;margin-top:0.4rem}
+
+footer{position:relative;z-index:1;text-align:center;color:var(--muted);font-size:0.72rem;padding:2.5rem 1rem 2.2rem;border-top:1px solid rgba(30,41,59,0.6);margin-top:4rem;line-height:1.8}
+footer b{color:var(--text)}
+
+@media(max-width:760px){
+  .form-grid,.proj-grid,.cert-grid{grid-template-columns:1fr}
+  nav .links{display:none}
+}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div class="wrap">
+
+<nav>
+  <div class="marca">Caio <span>Cedraz</span></div>
+  <div class="links">
+    <a href="#formacao">Formação</a>
+    <a href="#experiencia">Experiência</a>
+    <a href="#projetos">Projetos</a>
+    <a href="#skills">Competências</a>
+    <a href="#contato">Contato</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="badge"><i class="fas fa-circle"></i> Graduando em Engenharia de Software</div>
+  <h1>Caio Felipe<br>Gonçalves <span>Cedraz</span></h1>
+  <p class="papel">Transformo dados espalhados em <b style="color:var(--text)">indicadores, dashboards e automações</b> que equipes usam todos os dias. Graduado em Administração, graduando em Engenharia de Software — unindo a visão de negócio à prática de desenvolvimento.</p>
+  <div class="contatos">
+    <a class="chip" href="https://github.com/cfcedraz" target="_blank"><i class="fab fa-github"></i> github.com/cfcedraz</a>
+    <a class="chip" href="https://www.linkedin.com/in/caio-cedraz-b19311325" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+    <a class="chip" href="mailto:caiofcedraz@gmail.com"><i class="fas fa-envelope"></i> caiofcedraz@gmail.com</a>
+    <span class="chip"><i class="fas fa-location-dot"></i> Brasília · DF</span>
+  </div>
+</header>
+
+<section id="sobre">
+  <div class="sec-tit">
+    <div class="ic"><i class="fas fa-user"></i></div>
+    <div><h2>Sobre mim</h2><small>quem eu sou e como trabalho</small></div>
+  </div>
+  <div class="card txt">
+    Profissional de administração com perfil técnico e atuação prática em dados desde a operação: construo soluções
+    de ponta a ponta — da consulta em bancos <b>PostgreSQL, SQL Server e MongoDB</b> à publicação web versionada em Git —
+    com <b>Python, PowerShell e JavaScript</b>. Hoje mantenho em produção um ecossistema de dashboards com autenticação,
+    auditoria, rotinas automatizadas 24/7 e tolerância a falhas, construído do zero dentro da operação logística
+    farmacêutica. Acredito em medir antes de opinar: minhas análises já comprovaram, com dados auditáveis, melhorias
+    reais de processo. Uso <b>agentes de IA</b> (Cursor/Claude, Codex, GitHub Copilot) como multiplicadores de
+    produtividade no desenvolvimento e na automação.
+  </div>
+</section>
+
+<section id="formacao">
+  <div class="sec-tit">
+    <div class="ic"><i class="fas fa-graduation-cap"></i></div>
+    <div><h2>Formação acadêmica</h2><small>a base de tudo</small></div>
+  </div>
+  <div class="form-grid">
+    <div class="card form-card">
+      <div class="curso">Engenharia de Software</div>
+      <div class="inst">Anhanguera</div>
+      <div class="per"><i class="far fa-calendar"></i> janeiro/2024 — junho/2027</div>
+      <span class="st andamento"><i class="fas fa-circle-notch"></i> Em andamento</span>
+      <div class="prog"><div id="prog-eng" style="width:0%"></div></div>
+      <div class="prog-leg" id="prog-eng-leg">calculando progresso...</div>
+    </div>
+    <div class="card form-card">
+      <div class="curso">Administração</div>
+      <div class="inst">Estácio</div>
+      <div class="per"><i class="far fa-calendar"></i> janeiro/2022 — dezembro/2025</div>
+      <span class="st completo"><i class="fas fa-check"></i> Graduação completa</span>
+      <div class="prog"><div style="width:100%"></div></div>
+      <div class="prog-leg">concluída — visão de negócio, processos e gestão</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:1rem">
+    <h3 style="font-size:0.82rem;font-weight:800;color:var(--aura-light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.3rem"><i class="fas fa-certificate"></i> Certificados</h3>
+    <div class="cert-grid">
+      <div class="cert"><i class="fas fa-check"></i> Administração de Bancos de Dados <small>· Aliança pela Educação</small></div>
+      <div class="cert"><i class="fas fa-check"></i> Gestão de Processos e Projetos <small>· Estácio</small></div>
+      <div class="cert"><i class="fas fa-check"></i> Gestão Estratégica <small>· Estácio</small></div>
+      <div class="cert"><i class="fas fa-check"></i> Liderança e Gestão de Equipes <small>· Estácio</small></div>
+      <div class="cert"><i class="fas fa-check"></i> Consultoria e Auditoria em Processos de RH <small>· Estácio</small></div>
+      <div class="cert"><i class="fas fa-check"></i> Marketing e Vendas <small>· Estácio</small></div>
+    </div>
+    <div class="txt" style="margin-top:0.9rem;font-size:0.8rem"><b>Idiomas:</b> Inglês — intermediário · Espanhol — intermediário</div>
+  </div>
+</section>
+
+<section id="experiencia">
+  <div class="sec-tit">
+    <div class="ic"><i class="fas fa-briefcase"></i></div>
+    <div><h2>Experiência profissional</h2><small>dados, logística e atendimento desde 2021</small></div>
+  </div>
+  <div class="tl">
+    <div class="tl-item atual">
+      <h3>Assistente de Qualidade · Gerenciamento Térmico <span class="tag-atual">atual</span></h3>
+      <div class="emp">Grupo Voetur (VTC LOG)</div>
+      <div class="per">maio/2026 — atual · Brasília/DF</div>
+      <ul>
+        <li>Construí e mantenho um hub com <b>mais de 15 dashboards web</b> (HTML/CSS/JavaScript), versionados no GitHub e publicados via GitHub Pages, atualizados por rotinas automatizadas em ciclos de 10 a 30 minutos.</li>
+        <li>Indicadores com consultas diretas a <b>PostgreSQL, SQL Server e MongoDB</b>: extração, cruzamento e validação de dados de entregas, dataloggers e sincronismo — com apoio de Excel, Power BI e pgAdmin.</li>
+        <li>Rotinas de coleta, tratamento e publicação em <b>Python</b> (pandas, SQLAlchemy, PyMongo) e <b>PowerShell</b>, rodando em produção com logs, timeouts e tolerância a falhas.</li>
+        <li>Implementei <b>autenticação e controle de acesso</b> com Firebase: senha com hash SHA-256, fluxo de solicitação e aprovação de usuários, trilha de auditoria e presença online.</li>
+        <li>Criei um <b>quadro colaborativo em tempo real</b> para a cobrança de pendências, com autoria registrada e trava de edição por usuário.</li>
+        <li>Análises executivas que comprovaram <b>melhoria de 4 pontos percentuais</b> no sincronismo em até 24h, auditando cerca de <b>29 mil pares pedido-datalogger</b>.</li>
+        <li>Uso de agentes e ferramentas de <b>IA</b> (Cursor/Claude, Codex, GitHub Copilot) aplicados à automação e melhoria contínua.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>Assistente Administrativo</h3>
+      <div class="emp">Gran Nutriz</div>
+      <div class="per">junho/2025 — maio/2026</div>
+      <ul>
+        <li>Organização do fluxo documental do RH com Kanban; digitalização e estruturação do acervo no GED com critérios de 5S.</li>
+        <li>Documentação de admissões e desligamentos em conformidade com as normas internas.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>Assistente Administrativo de Logística</h3>
+      <div class="emp">SSA Alimentos (Super Frango)</div>
+      <div class="per">fevereiro/2025 — maio/2025 · Brasília/DF e entorno</div>
+      <ul>
+        <li>Gestão de entregas com sistemas de rastreio (Omnilink, Autotrac, Lincros) e acompanhamento no SAP: ocorrências, devoluções, relatórios e planilhas de controle.</li>
+        <li>Administração de acessos e configuração de aplicativos de motoristas; interlocução com transportadoras, comercial e expedição.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>Auxiliar Administrativo / Comercial</h3>
+      <div class="emp">NECXT (Banco Mercantil)</div>
+      <div class="per">janeiro/2024 — fevereiro/2025</div>
+      <ul>
+        <li>Atendimento comercial em agência, apoio à transformação digital (autoatendimento e aplicativos) e rotinas administrativas.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>Assistente de Loja</h3>
+      <div class="emp">Americanas S/A</div>
+      <div class="per">outubro/2021 — abril/2023</div>
+      <ul>
+        <li>Atendimento, reposição, controle de validade e estoque, inventário e padrões de loja.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="projetos">
+  <div class="sec-tit">
+    <div class="ic"><i class="fas fa-code"></i></div>
+    <div><h2>Projetos em destaque</h2><small>construídos e mantidos em produção</small></div>
+  </div>
+  <div class="proj-grid">
+    <div class="card proj">
+      <div class="top"><div class="pic"><i class="fas fa-gauge-high"></i></div><h3>Hub de Dashboards Logísticos</h3></div>
+      <p>Central com 15+ painéis de indicadores operacionais em produção: entregas, dispositivos IoT (dataloggers), estoque, reversa e cargas. Publicação contínua via GitHub Pages, alimentada por rotinas automatizadas que consultam três bancos diferentes.</p>
+      <div class="tags"><span class="tag">HTML/CSS/JS</span><span class="tag">GitHub Pages</span><span class="tag">Python</span><span class="tag">PowerShell</span></div>
+    </div>
+    <div class="card proj">
+      <div class="top"><div class="pic"><i class="fas fa-stopwatch"></i></div><h3>Indicador Sincronismo 48h</h3></div>
+      <p>Painel de criticidade com contagem regressiva ao vivo, login com hash SHA-256, quadro colaborativo em tempo real (sinalizações e ocorrências com autoria e trava de edição), trilha de auditoria e presença online — tudo sem backend próprio, usando Firebase Realtime Database.</p>
+      <div class="tags"><span class="tag">Firebase</span><span class="tag">JavaScript</span><span class="tag">SHA-256</span><span class="tag">UX</span></div>
+    </div>
+    <div class="card proj">
+      <div class="top"><div class="pic"><i class="fas fa-robot"></i></div><h3>Rotinas de Dados 24/7</h3></div>
+      <p>Pipelines em Python (pandas, SQLAlchemy, PyMongo) e PowerShell que extraem, cruzam e publicam dados de PostgreSQL, SQL Server e MongoDB em ciclos de 10 a 30 minutos — com mutex de execução, timeouts, logs e preservação da versão anterior em caso de falha.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">SQLAlchemy</span><span class="tag">PyMongo</span><span class="tag">PowerShell</span></div>
+    </div>
+    <div class="card proj">
+      <div class="top"><div class="pic"><i class="fas fa-chart-line"></i></div><h3>Auditoria de Melhoria de Processo</h3></div>
+      <p>Análise de ~29 mil pares pedido-datalogger em 3 meses que comprovou melhoria de +4 pontos percentuais no sincronismo em até 24h após cobrança ativa — com gráfico interativo, relatório executivo em Word/Excel e dados brutos auditáveis.</p>
+      <div class="tags"><span class="tag">Análise de dados</span><span class="tag">Chart.js</span><span class="tag">Excel</span><span class="tag">Storytelling</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="sec-tit">
+    <div class="ic"><i class="fas fa-layer-group"></i></div>
+    <div><h2>Competências técnicas</h2><small>stack do dia a dia</small></div>
+  </div>
+  <div class="skill-grid">
+    <div class="card skill">
+      <h3><i class="fas fa-database"></i> Bancos de dados</h3>
+      <div class="itens"><span class="tag">PostgreSQL</span><span class="tag">SQL Server</span><span class="tag">MongoDB</span><span class="tag">Supabase</span><span class="tag">Firebase RTDB</span></div>
+    </div>
+    <div class="card skill">
+      <h3><i class="fas fa-code"></i> Linguagens e automação</h3>
+      <div class="itens"><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">SQLAlchemy</span><span class="tag">PyMongo</span><span class="tag">PowerShell</span><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span></div>
+    </div>
+    <div class="card skill">
+      <h3><i class="fas fa-toolbox"></i> Ferramentas</h3>
+      <div class="itens"><span class="tag">Git / GitHub</span><span class="tag">GitHub Pages</span><span class="tag">pgAdmin</span><span class="tag">Excel</span><span class="tag">Power BI</span><span class="tag">SAP</span></div>
+    </div>
+    <div class="card skill">
+      <h3><i class="fas fa-wand-magic-sparkles"></i> IA aplicada</h3>
+      <div class="itens"><span class="tag">Cursor / Claude</span><span class="tag">Codex</span><span class="tag">GitHub Copilot</span><span class="tag">Automação com agentes</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="sec-tit">
+    <div class="ic"><i class="fas fa-paper-plane"></i></div>
+    <div><h2>Contato</h2><small>vamos conversar</small></div>
+  </div>
+  <div class="card">
+    <p class="txt">Aberto a oportunidades e projetos em <b>dados, automação e desenvolvimento</b>. O caminho mais rápido é o e-mail ou o LinkedIn:</p>
+    <div class="ctt" style="margin-top:1rem">
+      <a class="chip" href="mailto:caiofcedraz@gmail.com"><i class="fas fa-envelope"></i> caiofcedraz@gmail.com</a>
+      <a class="chip" href="https://www.linkedin.com/in/caio-cedraz-b19311325" target="_blank"><i class="fab fa-linkedin"></i> linkedin.com/in/caio-cedraz</a>
+      <a class="chip" href="https://github.com/cfcedraz" target="_blank"><i class="fab fa-github"></i> github.com/cfcedraz</a>
+      <span class="chip"><i class="fas fa-phone"></i> +55 61 98160-7295</span>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <b>Caio Felipe Gonçalves Cedraz</b> · Engenharia de Software em formação<br>
+  Este site é estático (HTML/CSS/JS puro), hospedado no GitHub Pages — código no <a href="https://github.com/cfcedraz/cfcedraz.github.io" style="color:var(--aura-light)">repositório</a>.
+</footer>
+
+<script>
+// progresso da graduacao em Engenharia de Software (jan/2024 a jun/2027)
+(function(){
+  const ini = new Date(2024, 0, 1), fim = new Date(2027, 5, 30), hoje = new Date();
+  let pct = Math.round(100 * (hoje - ini) / (fim - ini));
+  pct = Math.max(0, Math.min(100, pct));
+  document.getElementById("prog-eng").style.width = pct + "%";
+  document.getElementById("prog-eng-leg").textContent = pct + "% do período concluído · previsão de conclusão: junho/2027";
+})();
+</script>
+</body>
+</html>

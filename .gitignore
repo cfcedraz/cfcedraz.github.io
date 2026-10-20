@@ -1,0 +1,20 @@
+# Credenciais e segredos - NUNCA commitar
+.env
+.env.*
+*.env
+*token*
+*.pat
+pat.txt
+*secret*
+*credencial*
+
+# Sistema / editor
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# Dependencias e builds (caso o site evolua)
+node_modules/
+dist/
