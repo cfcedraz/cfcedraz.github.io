@@ -107,6 +107,10 @@ section{padding-top:3.6rem}
 .proj p{color:var(--muted);font-size:0.84rem;line-height:1.65}
 .tags{display:flex;gap:0.4rem;flex-wrap:wrap;margin-top:0.9rem}
 .tag{font-size:0.64rem;font-weight:700;color:var(--muted);background:rgba(7,10,18,0.5);border:1px solid var(--border);border-radius:999px;padding:0.25rem 0.65rem}
+.btn-demo{display:inline-flex;align-items:center;gap:0.45rem;margin-top:0.95rem;font-size:0.72rem;font-weight:800;color:#07121c;background:linear-gradient(90deg,var(--aura-light),#0bf5ca);border-radius:999px;padding:0.45rem 1rem;text-decoration:none;transition:transform .15s, box-shadow .2s}
+.btn-demo:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(14,165,233,0.35)}
+.demo-nota{color:var(--muted);font-size:0.74rem;margin-top:0.9rem;line-height:1.6}
+.demo-nota i{color:var(--aura-light)}
 
 /* skills */
 .skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
@@ -281,6 +285,24 @@ footer b{color:var(--text)}
       <div class="top"><div class="pic"><i class="fas fa-stopwatch"></i></div><h3>Indicador Sincronismo 48h</h3></div>
       <p>Painel de criticidade com contagem regressiva ao vivo, login com hash SHA-256, quadro colaborativo em tempo real (sinalizações e ocorrências com autoria e trava de edição), trilha de auditoria e presença online — tudo sem backend próprio, usando Firebase Realtime Database.</p>
       <div class="tags"><span class="tag">Firebase</span><span class="tag">JavaScript</span><span class="tag">SHA-256</span><span class="tag">UX</span></div>
+      <a class="btn-demo" href="demos/sincronismo-48h.html" target="_blank"><i class="fas fa-play"></i> Ver demo interativa</a>
+    </div>
+    <div class="card proj">
+      <div class="top"><div class="pic"><i class="fas fa-truck-fast"></i></div><h3>Analítico Entregas × Sincronismo</h3></div>
+      <p>Indicador analítico que cruza entregas e pendências de sincronismo em cinco visões: cobrança, entregas do dia, tempo até o 1º sync, erros operacionais e cobrança individual por base — com séries diárias, rankings por agente e UF e exportação CSV/XLSX.</p>
+      <div class="tags"><span class="tag">JavaScript</span><span class="tag">Chart.js</span><span class="tag">PostgreSQL</span><span class="tag">MongoDB</span></div>
+      <a class="btn-demo" href="demos/entregas-vs-sincronismo.html" target="_blank"><i class="fas fa-play"></i> Ver demo interativa</a>
+    </div>
+    <div class="card proj">
+      <div class="top"><div class="pic"><i class="fas fa-plane-arrival"></i></div><h3>Retirada no Aeroporto</h3></div>
+      <p>Painel que acompanha cargas aéreas do desembarque à retirada pela base: horas paradas no aeroporto, críticos acima de 24h, visão de sextas-feiras (risco de fim de semana) e busca por pedido, AWB, CT-e ou agente.</p>
+      <div class="tags"><span class="tag">JavaScript</span><span class="tag">SQL Server</span><span class="tag">Supabase</span><span class="tag">UX</span></div>
+      <a class="btn-demo" href="demos/retirada-aeroporto.html" target="_blank"><i class="fas fa-play"></i> Ver demo interativa</a>
+    </div>
+    <div class="card proj">
+      <div class="top"><div class="pic"><i class="fas fa-file-arrow-down"></i></div><h3>Extrator de Relatórios · RPA Desktop</h3></div>
+      <p>Aplicativo Windows em C#/.NET que automatiza, com Microsoft Playwright, o download em lote de relatórios de uma plataforma web de monitoramento: fila de trabalho a partir de planilha Excel, validação do conteúdo dos PDFs baixados, travas de consistência e retomada automática após falhas. Projeto que me aproximou de RPA e de desktop — duas frentes que gosto de explorar.</p>
+      <div class="tags"><span class="tag">C# / .NET</span><span class="tag">Playwright</span><span class="tag">WinForms</span><span class="tag">ClosedXML</span><span class="tag">PdfPig</span></div>
     </div>
     <div class="card proj">
       <div class="top"><div class="pic"><i class="fas fa-robot"></i></div><h3>Rotinas de Dados 24/7</h3></div>
@@ -293,6 +315,7 @@ footer b{color:var(--text)}
       <div class="tags"><span class="tag">Análise de dados</span><span class="tag">Chart.js</span><span class="tag">Excel</span><span class="tag">Storytelling</span></div>
     </div>
   </div>
+  <p class="demo-nota"><i class="fas fa-shield-halved"></i> As demos interativas são cópias reais dos painéis em produção com <b style="color:var(--text)">dados 100% fictícios</b>, gerados exclusivamente para este portfólio — nenhuma informação operacional, de clientes ou de terceiros é exposta. As versões reais rodam em ambiente privado com autenticação.</p>
 </section>
 
 <section id="skills">
