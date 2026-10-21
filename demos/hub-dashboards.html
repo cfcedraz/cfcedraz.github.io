@@ -1,0 +1,1344 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hub de Indicadores — DEMO (dados fictícios)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --aura:#0ea5e9;
+  --aura-light:#38bdf8;
+  --aura-glow:rgba(14,165,233,0.4);
+  --purple:#0bf5ca98;
+  --purple-glow:rgba(139,92,246,0.3);
+  --dark:#0b0f19;
+  --darker:#070a12;
+  --card:#3784c709;
+  --card-hover:#1a2332;
+  --text:#f8fafc;
+  --muted:#94a3b8;
+  --border:#1e293b;
+  --success:#10b981;
+  --warning:#f59e0b;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--dark);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ===== ANIMATED BACKGROUND ===== */
+.bg-mesh{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(14,165,233,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(139,92,246,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 60% at 50% 100%, rgba(14,165,233,0.05) 0%, transparent 50%);
+}
+.bg-grid{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(14,165,233,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14,165,233,0.03) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 70%);
+}
+
+/* ===== FLOATING ORBS ===== */
+.orb{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(80px);
+  pointer-events:none;
+  z-index:0;
+  opacity:0.5;
+  animation:float 20s ease-in-out infinite;
+}
+.orb-1{
+  width:400px;height:400px;
+  background:radial-gradient(circle, var(--aura-glow), transparent 70%);
+  top:-100px;right:-100px;
+  animation-delay:0s;
+}
+.orb-2{
+  width:300px;height:300px;
+  background:radial-gradient(circle, var(--purple-glow), transparent 70%);
+  bottom:10%;left:-80px;
+  animation-delay:-7s;
+  animation-duration:25s;
+}
+.orb-3{
+  width:250px;height:250px;
+  background:radial-gradient(circle, rgba(16,185,129,0.15), transparent 70%);
+  top:40%;right:10%;
+  animation-delay:-14s;
+  animation-duration:18s;
+}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1)}
+  25%{transform:translate(30px,-40px) scale(1.05)}
+  50%{transform:translate(-20px,20px) scale(0.95)}
+  75%{transform:translate(40px,30px) scale(1.02)}
+}
+
+/* ===== PARTICLES ===== */
+.particles{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.particle{
+  position:absolute;
+  width:3px;height:3px;
+  background:var(--aura);
+  border-radius:50%;
+  opacity:0;
+  animation:particle-rise 15s linear infinite;
+}
+@keyframes particle-rise{
+  0%{transform:translateY(100vh) scale(0);opacity:0}
+  10%{opacity:0.6}
+  90%{opacity:0.6}
+  100%{transform:translateY(-10vh) scale(1);opacity:0}
+}
+
+/* ===== HEADER ===== */
+.header{
+  position:relative;z-index:1;
+  padding:4rem 2rem 2.5rem;
+  text-align:center;
+}
+.header-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(14,165,233,0.08);
+  border:1px solid rgba(14,165,233,0.2);
+  color:var(--aura-light);
+  padding:0.5rem 1.25rem;
+  border-radius:999px;
+  font-size:0.75rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin-bottom:1.75rem;
+  backdrop-filter:blur(10px);
+  animation:fadeInDown 0.8s ease;
+}
+.header-badge i{
+  font-size:0.5rem;
+  color:var(--success);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:0.4;transform:scale(0.8)}
+}
+.header h1{
+  font-size:3.5rem;
+  font-weight:900;
+  letter-spacing:-0.03em;
+  margin-bottom:1rem;
+  animation:fadeInUp 0.8s ease 0.1s both;
+}
+.header h1 .aura{
+  background:linear-gradient(180deg, var(--aura-light) 0%,  #24cbe3ad 50%, var(--aura) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.header-subtitle{
+  color:var(--muted);
+  font-size:1.1rem;
+  max-width:560px;
+  margin:0 auto 2.5rem;
+  line-height:1.7;
+  animation:fadeInUp 0.8s ease 0.2s both;
+}
+
+/* ===== SEARCH BAR ===== */
+.search-box{
+  position:relative;
+  max-width:480px;
+  margin:0 auto 3rem;
+  animation:fadeInUp 0.8s ease 0.3s both;
+}
+.search-box input{
+  width:100%;
+  padding:1rem 1.25rem 1rem 3rem;
+  background:rgba(17,24,39,0.8);
+  border:1px solid var(--border);
+  border-radius:14px;
+  color:var(--text);
+  font-size:0.95rem;
+  font-family:inherit;
+  outline:none;
+  transition:all 0.3s;
+  backdrop-filter:blur(10px);
+}
+.search-box input::placeholder{color:var(--muted)}
+.search-box input:focus{
+  border-color:var(--aura);
+  box-shadow:0 0 0 3px rgba(14,165,233,0.1), 0 0 30px rgba(14,165,233,0.05);
+}
+.search-box i{
+  position:absolute;
+  left:1.1rem;top:50%;
+  transform:translateY(-50%);
+  color:var(--muted);
+  font-size:0.9rem;
+}
+
+/* ===== SECTION ===== */
+.container{
+  position:relative;z-index:1;
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 1.5rem 3rem;
+}
+.section-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.75rem;
+  animation:fadeInUp 0.8s ease 0.4s both;
+}
+.section-label{
+  display:flex;align-items:center;gap:0.75rem;
+  font-size:0.8rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--muted);
+}
+.section-label::before{
+  content:'';width:4px;height:20px;
+  background:linear-gradient(180deg, var(--aura), var(--purple));
+  border-radius:2px;
+}
+.section-count{
+  font-size:0.8rem;color:var(--muted);
+  background:var(--card);
+  padding:0.35rem 0.9rem;
+  border-radius:999px;
+  border:1px solid var(--border);
+}
+
+/* ===== GRID ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+  gap:1.5rem;
+}
+
+/* ===== CARD ===== */
+.card{
+  position:relative;
+  min-width:0;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2rem;
+  cursor:pointer;
+  overflow:hidden;
+  transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
+  animation:fadeInUp 0.8s ease both;
+}
+.card:nth-child(1){animation-delay:0.45s}
+.card:nth-child(2){animation-delay:0.55s}
+.card:nth-child(3){animation-delay:0.65s}
+.card:nth-child(4){animation-delay:0.75s}
+.card:nth-child(5){animation-delay:0.85s}
+.card:nth-child(6){animation-delay:0.95s}
+.card:nth-child(7){animation-delay:1.05s}
+.card:nth-child(8){animation-delay:1.15s}
+.card:nth-child(9){animation-delay:1.25s}
+.card:nth-child(10){animation-delay:1.35s}
+.card:nth-child(11){animation-delay:1.45s}
+.card:nth-child(12){animation-delay:1.55s}
+.card:nth-child(13){animation-delay:1.65s}
+
+.card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg, var(--aura), var(--purple), var(--aura));
+  background-size:200% 100%;
+  opacity:0;
+  transition:opacity 0.4s;
+  animation:shimmer 3s linear infinite;
+}
+@keyframes shimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+.card::after{
+  content:'';position:absolute;
+  inset:0;
+  background:radial-gradient(600px circle at var(--mouse-x,50%) var(--mouse-y,50%), rgba(14,165,233,0.06), transparent 40%);
+  opacity:0;
+  transition:opacity 0.3s;
+  pointer-events:none;
+}
+.card:hover{
+  transform:translateY(-6px) scale(1.01);
+  border-color:rgba(14,165,233,0.25);
+  box-shadow:
+    0 25px 50px -12px rgba(0,0,0,0.5),
+    0 0 0 1px rgba(14,165,233,0.1),
+    0 0 60px rgba(14,165,233,0.08);
+}
+.card:hover::before{opacity:1}
+.card:hover::after{opacity:1}
+
+.card-top{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:1.25rem;
+}
+.card-icon-wrap{
+  position:relative;
+}
+.card-icon{
+  width:56px;height:56px;
+  border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;
+  background:linear-gradient(135deg, rgba(14,165,233,0.12), rgba(139,92,246,0.08));
+  border:1px solid rgba(14,165,233,0.2);
+  color:var(--aura-light);
+  transition:all 0.4s;
+}
+.card:hover .card-icon{
+  background:linear-gradient(135deg, rgba(14,165,233,0.2), rgba(139,92,246,0.15));
+  transform:scale(1.05) rotate(-3deg);
+  box-shadow:0 0 30px rgba(14,165,233,0.2);
+}
+.card-icon-glow{
+  position:absolute;inset:-4px;
+  border-radius:20px;
+  background:linear-gradient(135deg, var(--aura), var(--purple));
+  opacity:0;
+  filter:blur(12px);
+  transition:opacity 0.4s;
+  z-index:-1;
+}
+.card:hover .card-icon-glow{opacity:0.4}
+
+.card-status{
+  display:flex;align-items:center;gap:0.5rem;
+  font-size:0.7rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.06em;
+  padding:0.4rem 0.9rem;
+  border-radius:999px;
+  background:rgba(16,185,129,0.08);
+  color:var(--success);
+  border:1px solid rgba(16,185,129,0.15);
+}
+.card-status i{font-size:0.45rem;animation:pulse 2s ease-in-out infinite}
+.card-status.warn{background:rgba(245,158,11,0.1);color:#f59e0b;border-color:rgba(245,158,11,0.25)}
+.card-status.err{background:rgba(239,68,68,0.1);color:#ef4444;border-color:rgba(239,68,68,0.25)}
+.card-status.err i{animation:none}
+
+.card h3{
+  font-size:1.25rem;font-weight:700;
+  color:var(--text);
+  margin-bottom:0.6rem;
+  transition:color 0.3s;
+  overflow-wrap:anywhere;
+}
+.card:hover h3{color:var(--aura-light)}
+
+.card p{
+  color:var(--muted);
+  font-size:0.9rem;
+  line-height:1.7;
+  margin-bottom:1.5rem;
+  overflow-wrap:anywhere;
+}
+
+/* Tags */
+.card-tags{
+  display:flex;flex-wrap:wrap;gap:0.5rem;
+  margin-bottom:1.5rem;
+}
+.tag{
+  font-size:0.72rem;font-weight:600;
+  padding:0.35rem 0.7rem;
+  border-radius:8px;
+  background:rgba(14,165,233,0.06);
+  border:1px solid rgba(14,165,233,0.1);
+  color:var(--muted);
+  transition:all 0.3s;
+}
+.card:hover .tag{
+  background:rgba(14,165,233,0.1);
+  border-color:rgba(14,165,233,0.2);
+  color:var(--aura-light);
+}
+
+/* Footer */
+.card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:1.25rem;
+  border-top:1px solid var(--border);
+}
+.card-link{
+  display:flex;align-items:center;gap:0.5rem;
+  color:var(--aura-light);
+  font-weight:600;font-size:0.9rem;
+  text-decoration:none;
+  transition:all 0.3s;
+}
+.card-link span{position:relative}
+.card-link span::after{
+  content:'';position:absolute;
+  bottom:-2px;left:0;right:0;height:1px;
+  background:var(--aura);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.3s;
+}
+.card:hover .card-link span::after{transform:scaleX(1)}
+
+.card-arrow{
+  width:40px;height:40px;
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(14,165,233,0.08);
+  border:1px solid rgba(14,165,233,0.15);
+  color:var(--aura-light);
+  font-size:0.85rem;
+  transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.card:hover .card-arrow{
+  background:linear-gradient(135deg, var(--aura), var(--purple));
+  color:var(--text);
+  border-color:transparent;
+  transform:translateX(4px);
+  box-shadow:0 0 20px rgba(14,165,233,0.3);
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:3rem 1.5rem;
+  border-top:1px solid var(--border);
+  background:linear-gradient(180deg, transparent, rgba(14,165,233,0.02));
+}
+.footer-brand{
+  display:inline-flex;align-items:center;gap:0.1rem;
+  font-size:1.1rem;font-weight:700;
+  color:var(--text);
+  margin-bottom:0.75rem;
+}
+.footer-brand i{
+  background:linear-gradient(135deg, var(--aura), var(--purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.footer p{
+  color:var(--muted);
+  font-size:0.8rem;
+  line-height:1.8;
+}
+.footer a{
+  color:var(--aura-light);
+  text-decoration:none;
+  transition:opacity 0.3s;
+}
+.footer a:hover{opacity:0.7}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeInDown{
+  from{opacity:0;transform:translateY(-20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ===== LOGIN GATE (mesmos usuarios do Sincronismo 48h) ===== */
+body.bloqueada .header, body.bloqueada main, body.bloqueada .footer{filter:blur(16px);pointer-events:none;user-select:none}
+.lg-ov{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:1.5rem}
+body.bloqueada .lg-ov{display:flex}
+.lg-card{position:relative;width:100%;max-width:430px;background:rgba(15,23,42,0.72);border:1px solid rgba(14,165,233,0.25);border-radius:24px;padding:2.6rem 2.4rem 2.2rem;backdrop-filter:blur(22px);box-shadow:0 30px 80px rgba(0,0,0,0.6), 0 0 120px rgba(14,165,233,0.12);animation:fadeInDown 0.7s ease}
+.lg-card::before{content:"";position:absolute;inset:-1px;border-radius:24px;padding:1px;background:linear-gradient(135deg, rgba(14,165,233,0.55), transparent 38%, transparent 62%, rgba(11,245,202,0.4));-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.lg-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(14,165,233,0.08);border:1px solid rgba(14,165,233,0.2);color:var(--aura-light);padding:0.4rem 1rem;border-radius:999px;font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.4rem}
+.lg-badge i{font-size:0.5rem;color:var(--success);animation:pulse 2s ease-in-out infinite}
+.lg-card h2{font-size:1.75rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.4rem;color:var(--text)}
+.lg-card h2 span{background:linear-gradient(90deg,var(--aura-light),#0bf5ca);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lg-sub{color:var(--muted);font-size:0.82rem;line-height:1.6;margin-bottom:1.2rem}
+.lg-lbl{display:block;font-size:0.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin:1rem 0 0.45rem}
+.lg-inp-wrap{position:relative}
+.lg-inp-wrap > i{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:0.8rem;pointer-events:none}
+.lg-inp{width:100%;background:rgba(7,10,18,0.6);border:1px solid var(--border);border-radius:12px;color:var(--text);padding:0.85rem 1rem 0.85rem 2.6rem;font:inherit;font-size:0.9rem;outline:none;transition:border-color .2s, box-shadow .2s}
+.lg-inp:focus{border-color:var(--aura);box-shadow:0 0 0 3px rgba(14,165,233,0.15), 0 0 24px rgba(14,165,233,0.12)}
+.lg-err{display:none;font-size:0.76rem;color:#fca5a5;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:0.6rem 0.9rem;margin-top:1rem}
+.lg-err.on{display:block}
+.lg-mark{width:58px;height:58px;border-radius:17px;background:linear-gradient(135deg,var(--aura),#0284c7);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.45rem;margin-bottom:1.3rem;box-shadow:0 12px 34px rgba(14,165,233,0.4)}
+.lg-inp-wrap .eye{position:absolute;right:0.7rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.85rem;padding:6px;transition:color .15s}
+.lg-inp-wrap .eye:hover{color:var(--aura-light)}
+.lg-inp.com-eye{padding-right:2.6rem}
+@keyframes lgshake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.lg-card.erro{animation:lgshake .4s ease}
+.lg-btn{width:100%;margin-top:1.4rem;background:linear-gradient(135deg,var(--aura),#0284c7);border:none;border-radius:12px;color:#fff;font:inherit;font-size:0.92rem;font-weight:700;padding:0.95rem;cursor:pointer;box-shadow:0 10px 30px rgba(14,165,233,0.35);transition:transform .15s, box-shadow .2s}
+.lg-btn:hover{transform:translateY(-1px);box-shadow:0 14px 40px rgba(14,165,233,0.45)}
+.lg-btn:disabled{opacity:.6;cursor:wait;transform:none}
+.lg-foot{text-align:center;color:var(--muted);font-size:0.68rem;margin-top:1.4rem;line-height:1.8}
+.lg-link{color:var(--aura-light);cursor:pointer;transition:opacity .15s}
+.lg-link:hover{opacity:0.8}
+.lg-link b{font-weight:700}
+.lg-okmsg{display:none;font-size:0.76rem;color:#6ee7b7;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:0.6rem 0.9rem;margin-top:1rem}
+.lg-okmsg.on{display:block}
+.tb-user{position:fixed;top:1.2rem;right:1.4rem;z-index:40;display:flex;gap:0.5rem;align-items:center;animation:fadeInDown .8s ease}
+.tb-user .quem{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(15,23,42,0.6);border:1px solid var(--border);border-radius:999px;color:var(--text);font-size:0.76rem;font-weight:600;padding:0.5rem 1rem;backdrop-filter:blur(12px);cursor:pointer;transition:border-color .2s, box-shadow .2s}
+.tb-user .quem:hover{border-color:rgba(14,165,233,0.5);box-shadow:0 0 18px rgba(14,165,233,0.15)}
+.tb-user .quem i{color:var(--aura-light)}
+.tb-user .sair{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(15,23,42,0.6);border:1px solid var(--border);border-radius:999px;color:var(--muted);font:inherit;font-size:0.74rem;font-weight:600;padding:0.5rem 0.95rem;cursor:pointer;backdrop-filter:blur(12px);transition:all .2s}
+.tb-user .sair:hover{border-color:rgba(239,68,68,0.5);color:#fca5a5}
+body.bloqueada .tb-user{display:none}
+
+/* ===== AREA DO USUARIO (hub) ===== */
+.up-ov{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:1.5rem;background:rgba(7,10,18,0.55);backdrop-filter:blur(8px)}
+.up-ov.aberto{display:flex}
+.up-card{position:relative;width:100%;max-width:580px;max-height:86vh;overflow:auto;background:rgba(15,23,42,0.88);border:1px solid rgba(14,165,233,0.25);border-radius:22px;padding:1.8rem 1.8rem 1.6rem;backdrop-filter:blur(22px);box-shadow:0 30px 80px rgba(0,0,0,0.6), 0 0 100px rgba(14,165,233,0.1);animation:fadeInDown .5s ease}
+.up-head{display:flex;align-items:center;gap:0.85rem;margin-bottom:0.6rem}
+.up-head .ic{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,var(--aura),#0284c7);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 24px rgba(14,165,233,0.35)}
+.up-head h3{font-size:1.12rem;font-weight:800;color:var(--text)}
+.up-head small{display:block;color:var(--muted);font-size:0.72rem;font-weight:500;margin-top:2px}
+.up-x{margin-left:auto;background:none;border:none;color:var(--muted);font-size:1rem;cursor:pointer;width:34px;height:34px;border-radius:10px;transition:all .15s}
+.up-x:hover{background:rgba(255,255,255,0.06);color:var(--text)}
+.up-sec{display:flex;align-items:center;justify-content:space-between;gap:0.6rem;font-size:0.66rem;font-weight:700;color:var(--aura-light);text-transform:uppercase;letter-spacing:0.08em;margin:1.2rem 0 0.6rem}
+.up-sec small{text-transform:none;letter-spacing:0;color:var(--muted);font-weight:500}
+.up-item{display:flex;align-items:center;gap:0.7rem;background:rgba(7,10,18,0.5);border:1px solid var(--border);border-radius:12px;padding:0.68rem 0.9rem;margin-bottom:0.45rem;font-size:0.82rem;color:var(--text);flex-wrap:wrap}
+.up-item b{font-weight:700}
+.up-item small{color:var(--muted);font-size:0.7rem}
+.up-item .fim{margin-left:auto;display:flex;gap:0.4rem;align-items:center}
+.dot-on{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 10px var(--success);animation:pulse 2s infinite;flex:none}
+.dot-off{width:8px;height:8px;border-radius:50%;background:#475569;flex:none}
+.up-mini{font:inherit;font-size:0.7rem;font-weight:700;border:1px solid var(--border);background:rgba(7,10,18,0.5);color:var(--muted);border-radius:9px;padding:0.42rem 0.8rem;cursor:pointer;transition:all .15s}
+.up-mini:hover{border-color:var(--aura);color:var(--aura-light)}
+.up-mini.ok:hover{border-color:var(--success);color:#6ee7b7}
+.up-mini.no:hover{border-color:#ef4444;color:#fca5a5}
+.up-msg{display:none;font-size:0.74rem;border-radius:10px;padding:0.6rem 0.9rem;margin-top:0.9rem}
+.up-msg.ok{display:block;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.3);color:#6ee7b7}
+.up-msg.erro{display:block;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);color:#fca5a5}
+.up-vazio{color:var(--muted);font-size:0.76rem;padding:0.3rem 0.1rem}
+.up-form{display:none;margin-top:0.4rem}
+.up-form.aberto{display:block}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .header h1{font-size:2.2rem}
+  .section-header{gap:1rem}
+  .grid{grid-template-columns:1fr}
+  .card{padding:1.5rem}
+}
+@media(max-width:480px){
+  .header{padding:2.5rem 1rem 1.5rem}
+  .header h1{font-size:1.65rem}
+  .header-subtitle{font-size:1rem}
+  .section-header{align-items:flex-start;flex-direction:column}
+}
+</style>
+</head>
+<body class="bloqueada">
+
+<!-- Usuario logado -->
+<div class="tb-user">
+  <span class="quem" onclick="abrirAreaHub()" title="Área do usuário"><i class="fas fa-circle-user"></i> <b id="quem-nome"></b> <i class="fas fa-chevron-down" style="font-size:0.55rem"></i></span>
+  <button class="sair" onclick="sairHub()" title="Encerrar sessão"><i class="fas fa-right-from-bracket"></i> Sair</button>
+</div>
+
+<!-- Area do usuario -->
+<div class="up-ov" id="up-ov">
+  <div class="up-card">
+    <div class="up-head">
+      <div class="ic"><i class="fas fa-users"></i></div>
+      <div><h3>Área do usuário</h3><small id="up-sub"></small></div>
+      <button class="up-x" onclick="fecharAreaHub()" title="Fechar"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="up-sec">Com acesso <small id="up-n-acesso"></small></div>
+    <div id="up-lista-acesso"><div class="up-vazio">Carregando...</div></div>
+    <div class="up-sec">Aguardando aprovação <small id="up-n-pend"></small></div>
+    <div id="up-lista-pend"><div class="up-vazio">Carregando...</div></div>
+    <div class="up-sec">Criar usuário
+      <button class="up-mini" onclick="document.getElementById('up-form').classList.toggle('aberto')"><i class="fas fa-user-plus"></i> Novo usuário</button>
+    </div>
+    <div class="up-form" id="up-form">
+      <label class="lg-lbl" for="nu-login">Login · padrão nome.sobrenome, minúsculas</label>
+      <div class="lg-inp-wrap"><i class="fas fa-user"></i><input id="nu-login" class="lg-inp" placeholder="nome.sobrenome" autocapitalize="none" spellcheck="false"></div>
+      <label class="lg-lbl" for="nu-nome">Nome de exibição</label>
+      <div class="lg-inp-wrap"><i class="fas fa-id-card"></i><input id="nu-nome" class="lg-inp" placeholder="Ex.: Maria Silva"></div>
+      <label class="lg-lbl" for="nu-senha">Senha inicial · mínimo 6 caracteres</label>
+      <div class="lg-inp-wrap"><i class="fas fa-lock"></i><input id="nu-senha" type="password" class="lg-inp" autocomplete="new-password"></div>
+      <button class="lg-btn" style="margin-top:1.1rem;padding:0.8rem" onclick="enviarNovoUsuario()"><i class="fas fa-paper-plane" style="margin-right:0.5rem"></i>Enviar</button>
+    </div>
+    <div class="up-msg" id="up-msg"></div>
+  </div>
+</div>
+
+<!-- Login Gate -->
+<div class="lg-ov" id="lg-ov">
+  <div class="lg-card">
+    <div class="lg-mark"><i class="fas fa-chart-line"></i></div>
+    <div class="lg-badge"><i class="fas fa-circle"></i> Acesso Restrito</div>
+    <h2>Gerenciamento Térmico</h2>
+    <div id="lg-modo-login">
+      <div class="lg-sub">Central de indicadores. Entre com seu usuário para acessar os dashboards.</div>
+      <label class="lg-lbl" for="lg-user">Usuário</label>
+      <div class="lg-inp-wrap"><i class="fas fa-user"></i><input id="lg-user" class="lg-inp" placeholder="nome.sobrenome" autocomplete="username" autocapitalize="none" spellcheck="false"></div>
+      <label class="lg-lbl" for="lg-pass">Senha</label>
+      <div class="lg-inp-wrap"><i class="fas fa-lock"></i><input id="lg-pass" type="password" class="lg-inp com-eye" placeholder="••••••••" autocomplete="current-password"><button type="button" class="eye" onclick="verSenha('lg-pass',this)" title="Mostrar senha"><i class="fas fa-eye"></i></button></div>
+      <div class="lg-err" id="lg-err"></div>
+      <button class="lg-btn" id="lg-btn" onclick="fazerLoginHub()"><i class="fas fa-right-to-bracket" style="margin-right:0.5rem"></i>Entrar</button>
+      <div class="lg-foot">Mesmo usuário e senha dos indicadores · a sessão vale para todos os painéis<br>
+        <a class="lg-link" onclick="modoLoginHub('sol')">Primeiro acesso? <b>Solicitar cadastro</b></a></div>
+    </div>
+    <div id="lg-modo-sol" style="display:none">
+      <div class="lg-sub">Solicite seu cadastro: o acesso é liberado após aprovação da equipe.</div>
+      <label class="lg-lbl" for="sol-nome">Nome completo</label>
+      <div class="lg-inp-wrap"><i class="fas fa-id-card"></i><input id="sol-nome" class="lg-inp" placeholder="Ex.: Maria Silva"></div>
+      <label class="lg-lbl" for="sol-login">Login desejado · nome.sobrenome</label>
+      <div class="lg-inp-wrap"><i class="fas fa-user"></i><input id="sol-login" class="lg-inp" placeholder="nome.sobrenome" autocapitalize="none" spellcheck="false"></div>
+      <label class="lg-lbl" for="sol-senha">Senha · mínimo 6 caracteres</label>
+      <div class="lg-inp-wrap"><i class="fas fa-lock"></i><input id="sol-senha" type="password" class="lg-inp com-eye" autocomplete="new-password"><button type="button" class="eye" onclick="verSenha('sol-senha',this)" title="Mostrar senha"><i class="fas fa-eye"></i></button></div>
+      <div class="lg-err" id="sol-err"></div>
+      <div class="lg-okmsg" id="sol-ok"></div>
+      <button class="lg-btn" id="sol-btn" onclick="solicitarAcessoHub()"><i class="fas fa-paper-plane" style="margin-right:0.5rem"></i>Enviar solicitação</button>
+      <div class="lg-foot"><a class="lg-link" onclick="modoLoginHub('login')"><b>Já tem acesso? Entrar</b></a></div>
+    </div>
+  </div>
+</div>
+
+<!-- Background Effects -->
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="particles" id="particles"></div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-badge"><i class="fas fa-circle"></i> Hub de Indicadores</div>
+  <h1><span class="aura">Gerenciamento Térmico</span> </h1>
+  <p class="header-subtitle">Central de indicadores gerenciais e operacionais. Monitoramento de entregas, dispositivos e logística em tempo real.</p>
+
+  <div class="search-box">
+    <i class="fas fa-search"></i>
+    <input type="text" placeholder="Buscar dashboard..." id="searchInput">
+  </div>
+</header>
+
+<!-- Main -->
+<main class="container">
+  <div class="section-header">
+    <div class="section-label"><i class="fas fa-th-large" style="margin-right:0.4rem"></i> Paineis Gerenciais / Operacionais</div>
+    <div class="section-count" id="card-count">13 ativos</div>
+  </div>
+
+  <div class="grid" id="cardGrid">
+
+    <!-- Card 1 -->
+    <div class="card" data-search="indicador geral caixas consolidado demobox 130l 33l 42l filtro exportacao csv xlsx" onclick="demoIndisponivel(event)">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-layer-group"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Indicador Geral de Caixas</h3>
+      <p>Consolidado dos indicadores de caixas, com filtro por tipo e exportações CSV e XLSX correspondentes à seleção operacional.</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-layer-group" style="margin-right:0.3rem;font-size:0.6rem"></i>Consolidado</span>
+        <span class="tag"><i class="fas fa-filter" style="margin-right:0.3rem;font-size:0.6rem"></i>Filtros</span>
+        <span class="tag"><i class="fas fa-file-export" style="margin-right:0.3rem;font-size:0.6rem"></i>Exportação</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card" data-search="dispositivos loggers estoque transito entregues retornados" onclick="demoIndisponivel(event)">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-microchip"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Gestao de Dispositivos</h3>
+      <p>Controle total de loggers em transito, entregues, retornados e estoque operacional. Sincronizacao com o stage de dados e fallback para dados locais.</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-microchip" style="margin-right:0.3rem;font-size:0.6rem"></i>Dispositivos</span>
+        <span class="tag"><i class="fas fa-database" style="margin-right:0.3rem;font-size:0.6rem"></i>Loggers</span>
+        <span class="tag"><i class="fas fa-gears" style="margin-right:0.3rem;font-size:0.6rem"></i>Operacional</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card" data-search="entregas 20 dias retornos transportadora destinatario pedido logger" onclick="demoIndisponivel(event)">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-shipping-fast"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Controle de Entregas — Últimos 20 Dias</h3>
+      <p>Acompanhamento detalhado das entregas dos ultimos 20 dias. Status de retorno, transportadora, destinatario e localizacao por pedido e logger.</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-calendar" style="margin-right:0.3rem;font-size:0.6rem"></i>20 Dias</span>
+        <span class="tag"><i class="fas fa-undo" style="margin-right:0.3rem;font-size:0.6rem"></i>Retornos</span>
+        <span class="tag"><i class="fas fa-box" style="margin-right:0.3rem;font-size:0.6rem"></i>Entregas</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card" data-search="estoque dataloggers loggers dispositivos disponivel utilizar aguardando recebimento expedicao tecnico equipamento" onclick="demoIndisponivel(event)">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-warehouse"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Estoque de Dataloggers</h3>
+      <p>Controle operacional do estoque de loggers e dispositivos disponíveis, aguardando recebimento, expedição e status técnico por equipamento.</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-warehouse" style="margin-right:0.3rem;font-size:0.6rem"></i>Estoque</span>
+        <span class="tag"><i class="fas fa-truck-ramp-box" style="margin-right:0.3rem;font-size:0.6rem"></i>Expedição</span>
+        <span class="tag"><i class="fas fa-screwdriver-wrench" style="margin-right:0.3rem;font-size:0.6rem"></i>Status Técnico</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="card" data-search="reversa dataloggers loggers retornados pendentes retorno entregues cobranca operacional" onclick="demoIndisponivel(event)">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-rotate-left"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Reversa Dataloggers</h3>
+      <p>Acompanhamento de loggers entregues, retornados e pendentes de retorno, com foco na cobrança operacional e controle da reversa.</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-rotate-left" style="margin-right:0.3rem;font-size:0.6rem"></i>Retornos</span>
+        <span class="tag"><i class="fas fa-clock" style="margin-right:0.3rem;font-size:0.6rem"></i>Pendentes</span>
+        <span class="tag"><i class="fas fa-route" style="margin-right:0.3rem;font-size:0.6rem"></i>Reversa</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+    <!-- Card Reversa FORTEX -->
+    <div class="card" data-search="reversa fortex caixa 33l gelo pcm ares retornados pendentes retorno" onclick="demoIndisponivel(event)">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-box"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Reversa FORTEX</h3>
+      <p>Analítico de reversa da caixa FORTEX (33L GELO PCM). Universo dtbPortal: expedidas, retornadas e pendentes de retorno, só logger ARES.</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-box" style="margin-right:0.3rem;font-size:0.6rem"></i>FORTEX</span>
+        <span class="tag"><i class="fas fa-rotate-left" style="margin-right:0.3rem;font-size:0.6rem"></i>Reversa</span>
+        <span class="tag"><i class="fas fa-clock" style="margin-right:0.3rem;font-size:0.6rem"></i>Pendentes</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="card" data-search="caixas sem datalogger rastreio pedidos lpn uf tipo caixa coleta detalhe operacional" onclick="demoIndisponivel(event)">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-box-open"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Caixas sem Datalogger</h3>
+      <p>Rastreio de pedidos, LPNs e caixas coletadas sem vínculo de datalogger, permitindo análise por UF, tipo de caixa e detalhe operacional.</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-barcode" style="margin-right:0.3rem;font-size:0.6rem"></i>LPN</span>
+        <span class="tag"><i class="fas fa-microchip" style="margin-right:0.3rem;font-size:0.6rem"></i>Sem Logger</span>
+        <span class="tag"><i class="fas fa-location-dot" style="margin-right:0.3rem;font-size:0.6rem"></i>Rastreio</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+    <!-- Card 7 -->
+    <div class="card" data-search="Entregas x Pendência de Sincronismo" onclick="window.open('entregas-vs-sincronismo.html','_blank')">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-satellite-dish"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Entregas x Pendência de Sincronismo</h3>
+      <p>ANALÍTICO · Pedidos entregues no dia versus loggers ARES pendentes de sincronismo</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-clock" style="margin-right:0.3rem;font-size:0.6rem"></i>Últimos 20 dias</span>
+        <span class="tag"><i class="fas fa-map" style="margin-right:0.3rem;font-size:0.6rem"></i>Por UF | TOP 10 </span>
+        <span class="tag"><i class="fas fa-file-export" style="margin-right:0.3rem;font-size:0.6rem"></i>CSV/XLSX</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+    <!-- Card 7b -->
+    <div class="card" data-search="sincronismo 48h criticidade countdown pendencia entregue sem sync estourado critico" onclick="window.open('sincronismo-48h.html','_blank')">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-stopwatch"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Sincronismo 48h</h3>
+      <p>Entregues sem sincronismo com contagem regressiva ao vivo e níveis de criticidade — nenhuma pendência pode passar de 48 horas.</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-stopwatch" style="margin-right:0.3rem;font-size:0.6rem"></i>Countdown 48h</span>
+        <span class="tag"><i class="fas fa-fire" style="margin-right:0.3rem;font-size:0.6rem"></i>Críticos</span>
+        <span class="tag"><i class="fas fa-layer-group" style="margin-right:0.3rem;font-size:0.6rem"></i>5 níveis</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+    <!-- Card 8 -->
+    <div class="card" data-search="retirada aeroporto desembarque awb agente carga monitorada datalogger sexta fim de semana criticos volumetria" onclick="window.open('retirada-aeroporto.html','_blank')">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-plane-arrival"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Retirada no Aeroporto</h3>
+      <p>Cargas desembarcadas no aeroporto de destino versus retirada pelo agente. Críticos ≥ 24h, volumetria por AWB e ponto crítico de atenção nas sextas-feiras.</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-plane-arrival" style="margin-right:0.3rem;font-size:0.6rem"></i>Desembarque x Retirada</span>
+        <span class="tag"><i class="fas fa-triangle-exclamation" style="margin-right:0.3rem;font-size:0.6rem"></i>Críticos ≥ 24h</span>
+        <span class="tag"><i class="fas fa-calendar-week" style="margin-right:0.3rem;font-size:0.6rem"></i>Sextas-feiras</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+    <!-- Card 9 -->
+    <div class="card" data-search="indicador demobox caixa demo box relatorio analitico csv xlsx" onclick="demoIndisponivel(event)">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-box"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Indicador DEMOBOX</h3>
+      <p>Acompanhamento dedicado das caixas DEMOBOX com relatório analítico exportável.</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-box" style="margin-right:0.3rem;font-size:0.6rem"></i>DEMOBOX</span>
+        <span class="tag"><i class="fas fa-file-export" style="margin-right:0.3rem;font-size:0.6rem"></i>CSV/XLSX</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+    <!-- Card 10 -->
+    <div class="card" data-search="indicador caixa velha 130l relatorio analitico csv xlsx" onclick="demoIndisponivel(event)">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-box-archive"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Indicador Caixa Velha 130L</h3>
+      <p>Acompanhamento dedicado das caixas velhas 130L com relatório analítico exportável.</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-box-archive" style="margin-right:0.3rem;font-size:0.6rem"></i>130L</span>
+        <span class="tag"><i class="fas fa-file-export" style="margin-right:0.3rem;font-size:0.6rem"></i>CSV/XLSX</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+    <!-- Card 11 -->
+    <div class="card" data-search="indicador caixa 33l relatorio analitico csv xlsx" onclick="demoIndisponivel(event)">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-cube"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Indicador Caixa 33L</h3>
+      <p>Acompanhamento dedicado das caixas 33L com relatório analítico exportável.</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-cube" style="margin-right:0.3rem;font-size:0.6rem"></i>33L</span>
+        <span class="tag"><i class="fas fa-file-export" style="margin-right:0.3rem;font-size:0.6rem"></i>CSV/XLSX</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+    <!-- Card 12 -->
+    <div class="card" data-search="indicador caixa 42l relatorio analitico csv xlsx" onclick="demoIndisponivel(event)">
+      <div class="card-top">
+        <div class="card-icon-wrap">
+          <div class="card-icon-glow"></div>
+          <div class="card-icon"><i class="fas fa-cubes"></i></div>
+        </div>
+        <div class="card-status"><i class="fas fa-circle"></i> Demo</div>
+      </div>
+      <h3>Indicador Caixa 42L</h3>
+      <p>Acompanhamento dedicado das caixas 42L com relatório analítico exportável.</p>
+      <div class="card-tags">
+        <span class="tag"><i class="fas fa-cubes" style="margin-right:0.3rem;font-size:0.6rem"></i>42L</span>
+        <span class="tag"><i class="fas fa-file-export" style="margin-right:0.3rem;font-size:0.6rem"></i>CSV/XLSX</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link"><span>Abrir Dashboard</span> <i class="fas fa-arrow-right" style="font-size:0.75rem"></i></span>
+        <div class="card-arrow"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-brand"><i class="fas fa-chart-line"></i> DEMO LOG</div>
+  <p>· Gerenciamento Térmico ·</p>
+</footer>
+
+<script>
+/* ===== LOGIN (mesmos usuarios e sessao do Sincronismo 48h: login unico no dominio) ===== */
+const FB_HUB = "https://demo-sem-backend.invalid/sync48"; // DEMO: sem backend
+const SKEY_HUB = "hub_demo_sessao";
+let SES_HUB = null;
+let PULSO_HUB = null;
+
+async function sha256Hub(txt){
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(txt));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+function hubErr(msg){
+  const el = document.getElementById("lg-err");
+  if (msg){
+    el.textContent = msg; el.classList.add("on");
+    const card = document.querySelector(".lg-card");
+    if (card){ card.classList.remove("erro"); void card.offsetWidth; card.classList.add("erro"); }
+  } else el.classList.remove("on");
+}
+function verSenha(id, btn){
+  const inp = document.getElementById(id);
+  const aberto = inp.type === "text";
+  inp.type = aberto ? "password" : "text";
+  btn.innerHTML = '<i class="fas fa-eye' + (aberto ? '' : '-slash') + '"></i>';
+  btn.title = (aberto ? "Mostrar" : "Ocultar") + " senha";
+}
+function chaveUsuarioHub(login){ return login.replace(/[.#$\[\]\/]/g, "_"); }
+async function pulsoPresencaHub(){
+  if (!SES_HUB) return;
+  try {
+    await fetch(FB_HUB + "/_presenca/" + chaveUsuarioHub(SES_HUB.u) + ".json",
+      { method: "PUT", body: JSON.stringify({ q: SES_HUB.nome, t: Date.now() }) });
+  } catch(e){}
+}
+async function auditHub(acao, detalhe){
+  if (!SES_HUB) return;
+  const k = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  try {
+    await fetch(FB_HUB + "/_audit/" + k + ".json",
+      { method: "PUT", body: JSON.stringify({ t: Date.now(), u: SES_HUB.u, q: SES_HUB.nome, a: acao, x: String(detalhe || "hub").slice(0, 90) }) });
+  } catch(e){}
+}
+
+/* ===== AREA DO USUARIO: acessos, aprovacao de novos usuarios ===== */
+const MK_HUB = "0000000000000000000000000000000000000000000000000000000000000000";
+function escHub(t){ return String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function upMsgHub(msg, ok){
+  const el = document.getElementById("up-msg");
+  el.textContent = msg || "";
+  el.className = "up-msg" + (msg ? (ok ? " ok" : " erro") : "");
+}
+function abrirAreaHub(){
+  if (!SES_HUB) return;
+  document.getElementById("up-sub").textContent = SES_HUB.nome + " · " + SES_HUB.u;
+  upMsgHub("");
+  document.getElementById("up-form").classList.remove("aberto");
+  document.getElementById("up-ov").classList.add("aberto");
+  renderAreaHub();
+}
+function fecharAreaHub(){ document.getElementById("up-ov").classList.remove("aberto"); }
+document.addEventListener("keydown", e => { if (e.key === "Escape") fecharAreaHub(); });
+async function renderAreaHub(){
+  const la = document.getElementById("up-lista-acesso");
+  const lp = document.getElementById("up-lista-pend");
+  try {
+    const ehMk = (await sha256Hub(SES_HUB.u)) === MK_HUB;
+    const agora = Date.now();
+    // presenca (quem esta online) e leitura restrita; a lista de acessos e a aprovacao sao de todos
+    const [usuarios, pres, sols] = await Promise.all([
+      fetch(FB_HUB + "/_usuarios.json", { cache: "no-store" }).then(r => r.json()),
+      ehMk ? fetch(FB_HUB + "/_presenca.json", { cache: "no-store" }).then(r => r.json()) : Promise.resolve(null),
+      fetch(FB_HUB + "/_solicitacoes.json", { cache: "no-store" }).then(r => r.json()),
+    ]);
+    const us = usuarios || {}, pr = pres || {}, so = sols || {};
+    const chavesU = Object.keys(us).sort();
+    document.getElementById("up-n-acesso").textContent = "· " + chavesU.length + " usuário(s)";
+    la.innerHTML = chavesU.map(key => {
+      const reg = us[key];
+      const login = reg.login || key.replace(/_/g, ".");
+      if (!ehMk){
+        return '<div class="up-item"><span class="dot-off"></span>'
+          + '<b>' + escHub(reg.nome || login) + '</b><small>' + escHub(login) + '</small></div>';
+      }
+      const online = pr[key] && (agora - (pr[key].t || 0)) < 5*60000;
+      return '<div class="up-item"><span class="' + (online ? "dot-on" : "dot-off") + '"></span>'
+        + '<b>' + escHub(reg.nome || login) + '</b><small>' + escHub(login) + '</small>'
+        + '<span class="fim"><small>' + (online ? "online agora" : "offline") + '</small></span></div>';
+    }).join("") || '<div class="up-vazio">Nenhum usuário cadastrado.</div>';
+
+    const chavesS = Object.keys(so).sort((a,b) => (so[a].t||0) - (so[b].t||0));
+    document.getElementById("up-n-pend").textContent = chavesS.length ? "· " + chavesS.length + " solicitação(ões)" : "";
+    lp.innerHTML = chavesS.map(key => {
+      const s = so[key];
+      const quando = s.t ? new Date(s.t).toLocaleString("pt-BR") : "";
+      const acoes = '<span class="fim"><button class="up-mini ok" onclick="aprovarUsuario(\'' + key + '\')"><i class="fas fa-check"></i> Aprovar</button>'
+          + '<button class="up-mini no" onclick="recusarUsuario(\'' + key + '\')"><i class="fas fa-xmark"></i> Recusar</button></span>';
+      return '<div class="up-item"><span class="dot-off"></span><b>' + escHub(s.nome || s.login) + '</b>'
+        + '<small>' + escHub(s.login || "") + ' · solicitado por ' + escHub(s.porQ || "?") + (quando ? ' · ' + quando : '') + '</small>'
+        + acoes + '</div>';
+    }).join("") || '<div class="up-vazio">Nenhuma solicitação pendente.</div>';
+  } catch(e){
+    la.innerHTML = '<div class="up-vazio">Sem conexão com o servidor.</div>';
+    lp.innerHTML = "";
+  }
+}
+async function enviarNovoUsuario(){
+  const login = document.getElementById("nu-login").value.trim().toLowerCase();
+  const nome = document.getElementById("nu-nome").value.trim();
+  const senha = document.getElementById("nu-senha").value;
+  if (!/^[a-z0-9]+([._-][a-z0-9]+)*$/.test(login)){ upMsgHub("Login inválido. Use minúsculas no padrão nome.sobrenome."); return; }
+  if (!nome){ upMsgHub("Informe o nome de exibição."); return; }
+  if (senha.length < 6){ upMsgHub("A senha inicial precisa de pelo menos 6 caracteres."); return; }
+  try {
+    const key = chaveUsuarioHub(login);
+    const [jaUsuario, jaSolicitado] = await Promise.all([
+      fetch(FB_HUB + "/_usuarios/" + key + ".json", { cache: "no-store" }).then(r => r.json()),
+      fetch(FB_HUB + "/_solicitacoes/" + key + ".json", { cache: "no-store" }).then(r => r.json()),
+    ]);
+    if (jaUsuario){ upMsgHub("Esse login já tem acesso."); return; }
+    if (jaSolicitado){ upMsgHub("Esse login já está aguardando aprovação."); return; }
+    const h = await sha256Hub(login + ":" + senha);
+    const ehMk = (await sha256Hub(SES_HUB.u)) === MK_HUB;
+    if (ehMk){
+      await fetch(FB_HUB + "/_usuarios/" + key + ".json", { method: "PUT",
+        body: JSON.stringify({ nome: nome, login: login, h: h }) });
+      auditHub("cadastrou usuário", login);
+      upMsgHub("Usuário " + login + " criado com acesso imediato.", true);
+    } else {
+      await fetch(FB_HUB + "/_solicitacoes/" + key + ".json", { method: "PUT",
+        body: JSON.stringify({ nome: nome, login: login, h: h, t: Date.now(), porU: SES_HUB.u, porQ: SES_HUB.nome }) });
+      auditHub("solicitou usuário", login);
+      upMsgHub("Solicitação enviada. O acesso é liberado após aprovação.", true);
+    }
+    ["nu-login","nu-nome","nu-senha"].forEach(i => document.getElementById(i).value = "");
+    document.getElementById("up-form").classList.remove("aberto");
+    renderAreaHub();
+  } catch(e){ upMsgHub("Sem conexão com o servidor. Tente novamente."); }
+}
+async function aprovarUsuario(key){
+  try {
+    const s = await (await fetch(FB_HUB + "/_solicitacoes/" + key + ".json", { cache: "no-store" })).json();
+    if (!s){ renderAreaHub(); return; }
+    await fetch(FB_HUB + "/_usuarios/" + key + ".json", { method: "PUT",
+      body: JSON.stringify({ nome: s.nome, login: s.login, h: s.h }) });
+    await fetch(FB_HUB + "/_solicitacoes/" + key + ".json", { method: "DELETE" });
+    auditHub("aprovou usuário", s.login);
+    upMsgHub("Acesso de " + s.login + " aprovado.", true);
+    renderAreaHub();
+  } catch(e){ upMsgHub("Sem conexão com o servidor. Tente novamente."); }
+}
+async function recusarUsuario(key){
+  try {
+    const s = await (await fetch(FB_HUB + "/_solicitacoes/" + key + ".json", { cache: "no-store" })).json();
+    await fetch(FB_HUB + "/_solicitacoes/" + key + ".json", { method: "DELETE" });
+    auditHub("recusou usuário", s ? s.login : key);
+    upMsgHub("Solicitação recusada.", true);
+    renderAreaHub();
+  } catch(e){ upMsgHub("Sem conexão com o servidor. Tente novamente."); }
+}
+document.getElementById("up-ov").addEventListener("mousedown", e => { if (e.target === e.currentTarget) fecharAreaHub(); });
+function aplicarSessaoHub(){
+  document.body.classList.remove("bloqueada");
+  document.getElementById("quem-nome").textContent = SES_HUB.nome;
+  pulsoPresencaHub();
+  if (PULSO_HUB) clearInterval(PULSO_HUB);
+  PULSO_HUB = setInterval(pulsoPresencaHub, 120000);
+}
+function bloquearHub(){
+  SES_HUB = null;
+  try { localStorage.removeItem(SKEY_HUB); } catch(e){}
+  document.body.classList.add("bloqueada");
+  document.getElementById("lg-pass").value = "";
+  try { document.getElementById("lg-user").value = localStorage.getItem("gt_ultimo_login") || ""; } catch(e){}
+  hubErr("");
+  setTimeout(() => {
+    const u = document.getElementById("lg-user");
+    (u.value ? document.getElementById("lg-pass") : u).focus();
+  }, 200);
+}
+function sairHub(){ location.reload(); } // DEMO
+async function fazerLoginHub(){
+  const u = document.getElementById("lg-user").value.trim().toLowerCase();
+  const p = document.getElementById("lg-pass").value;
+  if (!u || !p){ hubErr("Preencha usuário e senha."); return; }
+  const btn = document.getElementById("lg-btn");
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-circle-notch fa-spin" style="margin-right:0.5rem"></i>Verificando...';
+  try {
+    const resp = await fetch(FB_HUB + "/_usuarios/" + encodeURIComponent(chaveUsuarioHub(u)) + ".json", { cache: "no-store" });
+    if (!resp.ok) throw new Error(resp.status);
+    const reg = await resp.json();
+    const h = await sha256Hub(u + ":" + p);
+    if (!reg || !reg.h || reg.h !== h){
+      hubErr("Usuário ou senha incorretos.");
+    } else {
+      SES_HUB = { u: u, nome: reg.nome || u, t: Date.now() };
+      try {
+        localStorage.setItem(SKEY_HUB, JSON.stringify(SES_HUB));
+        localStorage.setItem("gt_ultimo_login", u);
+      } catch(e){}
+      hubErr("");
+      aplicarSessaoHub();
+      auditHub("entrou no sistema");
+    }
+  } catch(e){
+    hubErr("Sem conexão com o servidor de acesso. Tente novamente.");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-right-to-bracket" style="margin-right:0.5rem"></i>Entrar';
+  }
+}
+async function validarSessaoHub(){
+  SES_HUB = { u: "visitante.demo", nome: "Visitante (demo)", t: Date.now() }; // DEMO: acesso aberto
+  aplicarSessaoHub();
+  try { // sessao cai se o usuario foi removido do cadastro
+    const resp = await fetch(FB_HUB + "/_usuarios/" + encodeURIComponent(chaveUsuarioHub(SES_HUB.u)) + ".json", { cache: "no-store" });
+    if (resp.ok && (await resp.json()) === null) bloquearHub();
+  } catch(e){ /* offline: mantem a sessao local */ }
+}
+["lg-user","lg-pass"].forEach(id => document.getElementById(id).addEventListener("keydown", e => {
+  if (e.key === "Enter"){ e.preventDefault(); fazerLoginHub(); }
+}));
+
+/* ===== solicitar cadastro (sem login): acesso liberado apos aprovacao ===== */
+function modoLoginHub(m){
+  document.getElementById("lg-modo-login").style.display = (m === "login") ? "" : "none";
+  document.getElementById("lg-modo-sol").style.display = (m === "sol") ? "" : "none";
+  hubErr("");
+  document.getElementById("sol-err").classList.remove("on");
+  document.getElementById("sol-ok").classList.remove("on");
+}
+function solErr(msg){
+  const el = document.getElementById("sol-err");
+  if (msg){ el.textContent = msg; el.classList.add("on"); } else el.classList.remove("on");
+  document.getElementById("sol-ok").classList.remove("on");
+}
+async function solicitarAcessoHub(){
+  const nome = document.getElementById("sol-nome").value.trim();
+  const login = document.getElementById("sol-login").value.trim().toLowerCase();
+  const senha = document.getElementById("sol-senha").value;
+  if (!nome){ solErr("Informe seu nome completo."); return; }
+  if (!/^[a-z0-9]+([._-][a-z0-9]+)*$/.test(login)){ solErr("Login inválido. Use minúsculas no padrão nome.sobrenome."); return; }
+  if (senha.length < 6){ solErr("A senha precisa de pelo menos 6 caracteres."); return; }
+  const btn = document.getElementById("sol-btn");
+  btn.disabled = true;
+  try {
+    const key = chaveUsuarioHub(login);
+    const [jaUsuario, jaSolicitado] = await Promise.all([
+      fetch(FB_HUB + "/_usuarios/" + key + ".json", { cache: "no-store" }).then(r => r.json()),
+      fetch(FB_HUB + "/_solicitacoes/" + key + ".json", { cache: "no-store" }).then(r => r.json()),
+    ]);
+    if (jaUsuario){ solErr("Esse login já tem acesso. Use a tela de entrada."); return; }
+    if (jaSolicitado){ solErr("Esse login já está aguardando aprovação."); return; }
+    const h = await sha256Hub(login + ":" + senha);
+    await fetch(FB_HUB + "/_solicitacoes/" + key + ".json", { method: "PUT",
+      body: JSON.stringify({ nome: nome, login: login, h: h, t: Date.now(), porU: login, porQ: nome + " (auto-cadastro)" }) });
+    const ak = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    fetch(FB_HUB + "/_audit/" + ak + ".json", { method: "PUT",
+      body: JSON.stringify({ t: Date.now(), u: login, q: nome, a: "solicitou acesso (tela de login)", x: login }) }).catch(() => {});
+    solErr("");
+    const ok = document.getElementById("sol-ok");
+    ok.textContent = "Solicitação enviada! Seu acesso será liberado assim que for aprovado.";
+    ok.classList.add("on");
+    ["sol-nome","sol-login","sol-senha"].forEach(i => document.getElementById(i).value = "");
+  } catch(e){
+    solErr("Sem conexão com o servidor. Tente novamente.");
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function demoIndisponivel(ev){
+  if (ev) ev.stopPropagation();
+  let t = document.getElementById('demo-toast');
+  if (!t){
+    t = document.createElement('div');
+    t.id = 'demo-toast';
+    t.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:56px;z-index:99998;'
+      + 'background:#1e293b;color:#e2e8f0;padding:10px 20px;border-radius:10px;border:1px solid #334155;'
+      + 'font:600 13px Segoe UI,Arial,sans-serif;opacity:0;transition:opacity .25s;pointer-events:none;max-width:90vw;text-align:center';
+    document.body.appendChild(t);
+  }
+  t.textContent = 'Este painel roda apenas no ambiente real (privado). Experimente os 3 cards com demo interativa.';
+  t.style.opacity = '1';
+  clearTimeout(t._h);
+  t._h = setTimeout(() => { t.style.opacity = '0'; }, 2800);
+}
+
+validarSessaoHub();
+
+// Mouse glow effect on cards
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+    card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+  });
+});
+
+// Contador dinamico de paineis
+document.getElementById('card-count').textContent = document.querySelectorAll('.card').length + ' ativos';
+
+// Status "Ao Vivo" real: le status_paineis.json publicado pela rotina de 10 min
+function idadeTexto(min){
+  if (min < 60) return Math.max(1, Math.round(min)) + ' min';
+  if (min < 2880) return (min/60).toFixed(min < 600 ? 1 : 0) + ' h';
+  return Math.round(min/1440) + ' d';
+}
+async function atualizarStatusPaineis(){
+  try {
+    const resp = await fetch('status_paineis.json?t=' + Date.now(), {cache: 'no-store'});
+    if (!resp.ok) return;
+    const dados = await resp.json();
+    const mapa = {};
+    (dados.paineis || []).forEach(p => { mapa[p.arquivo.toLowerCase()] = p.atualizado_em; });
+    const agora = new Date();
+    document.querySelectorAll('.card').forEach(card => {
+      const m = (card.getAttribute('onclick') || '').match(/([A-Za-z0-9_]+\.html)/);
+      const badge = card.querySelector('.card-status');
+      if (!m || !badge) return;
+      const ts = mapa[m[1].toLowerCase()];
+      if (!ts) return; // sem info: mantem badge padrao
+      const dt = new Date(ts);
+      const min = (agora - dt) / 60000;
+      badge.classList.remove('warn', 'err');
+      if (min <= 25){
+        badge.innerHTML = '<i class="fas fa-circle"></i> Ao Vivo &middot; ' + idadeTexto(min);
+      } else if (min <= 90){
+        badge.classList.add('warn');
+        badge.innerHTML = '<i class="fas fa-circle"></i> Atrasado &middot; ' + idadeTexto(min);
+      } else {
+        badge.classList.add('err');
+        badge.innerHTML = '<i class="fas fa-circle"></i> Parado &middot; ' + idadeTexto(min);
+      }
+      badge.title = 'Ultima atualizacao: ' + dt.toLocaleString('pt-BR');
+    });
+    if (dados.gerado_em){
+      const g = new Date(dados.gerado_em);
+      document.getElementById('card-count').textContent =
+        document.querySelectorAll('.card').length + ' ativos \u00b7 rotina ' + g.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+    }
+  } catch(e){ /* offline ou arquivo ausente: badges padrao */ }
+}
+atualizarStatusPaineis();
+setInterval(atualizarStatusPaineis, 60000);
+
+// Search filter
+const searchInput = document.getElementById('searchInput');
+const cards = document.querySelectorAll('.card');
+searchInput.addEventListener('input', e => {
+  const term = e.target.value.toLowerCase();
+  cards.forEach(card => {
+    const searchData = card.getAttribute('data-search');
+    const title = card.querySelector('h3').textContent.toLowerCase();
+    const desc = card.querySelector('p').textContent.toLowerCase();
+    const match = searchData.includes(term) || title.includes(term) || desc.includes(term);
+    card.style.display = match ? '' : 'none';
+    card.style.opacity = match ? '1' : '0';
+    card.style.transform = match ? '' : 'scale(0.95)';
+  });
+});
+
+// Generate floating particles
+const particlesContainer = document.getElementById('particles');
+for(let i=0; i<30; i++){
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDelay = Math.random() * 15 + 's';
+  p.style.animationDuration = (10 + Math.random() * 10) + 's';
+  p.style.width = (2 + Math.random() * 2) + 'px';
+  p.style.height = p.style.width;
+  particlesContainer.appendChild(p);
+}
+</script>
+
+<div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#0f172a;color:#e2e8f0;font:600 12px/1.5 Segoe UI,Arial,sans-serif;text-align:center;padding:7px 12px;border-top:2px solid #0ea5e9">DEMONSTRA&Ccedil;&Atilde;O &mdash; todos os dados desta p&aacute;gina s&atilde;o fict&iacute;cios (gerados para portf&oacute;lio). Vers&atilde;o real em produ&ccedil;&atilde;o com dados privados. &middot; <a href="https://cfcedraz.github.io" style="color:#38bdf8">cfcedraz.github.io</a></div></body>
+</html>
